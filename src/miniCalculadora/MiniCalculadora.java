@@ -31,9 +31,10 @@ public class MiniCalculadora extends javax.swing.JFrame {
         txfNum2 = new javax.swing.JTextField();
         txFResultado = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
+        boton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Minicalculadora");
 
         txfNum1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txfNum1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -50,7 +51,12 @@ public class MiniCalculadora extends javax.swing.JFrame {
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "+", "-", "/", "*" }));
 
-        jButton1.setText("=");
+        boton.setText("=");
+        boton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Calcular(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -64,7 +70,7 @@ public class MiniCalculadora extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                 .addComponent(txfNum2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(boton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txFResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(100, 100, 100))
@@ -78,12 +84,16 @@ public class MiniCalculadora extends javax.swing.JFrame {
                     .addComponent(txfNum2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txFResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(boton))
                 .addContainerGap(121, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void Calcular(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Calcular
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Calcular
 
     /**
      * @param args the command line arguments
@@ -121,10 +131,47 @@ public class MiniCalculadora extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton boton;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JTextField txFResultado;
     private javax.swing.JTextField txfNum1;
     private javax.swing.JTextField txfNum2;
     // End of variables declaration//GEN-END:variables
 }
+private void calcular(java.awt.event.ActionEvent evt) {
+Numero n1 = new Numero(txfNum1.getText(), ',');
+Numero n2 = new Numero(txfNum2.getText(), ',');
+double num1 = n1.getNumero();
+double num2 = n2.getNumero();
+double resul = 0;
+if (num1 == Double.MAX_VALUE || num2 == Double.MAX_VALUE) {
+txfResultado.setText("error");
+} else {
+String operacion = (String) comboBox.getSelectedItem();
+switch (operacion) {
+case "+":
+resul = num1 + num2;
+break;
+case "-":
+resul = num1 - num2;
+break;
+case "*":
+resul = num1 * num2;
+break;
+case "/":
+if(num2==0){
+resul=Double.MAX_VALUE;
+}else{
+resul = num1 / num2;
+}
+}
+if(resul==Double.MAX_VALUE){
+txfResultado.setText("error");
+
+}else{
+Numero resultado=new Numero(resul);
+txfResultado.setText(resultado.toString());
+}
+}
+}
+
